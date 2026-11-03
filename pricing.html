@@ -1,153 +1,62 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pricing — PREDIA</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--dark-brown:#24170F;--deep-brown:#352318;--warm-brown:#59402F;--warm-beige:#D9BFA1;--cream:#F4E9D9;--charcoal:#292725;--soft-gold:#C99A61;--white:#FFFFFF;--bg-primary:var(--dark-brown);--bg-secondary:var(--deep-brown);--bg-card:var(--charcoal);--text-primary:var(--cream);--text-secondary:var(--warm-beige);--text-muted:rgba(217,191,161,0.6);--border-color:rgba(201,154,97,0.15);--transition:all 0.3s ease}
-[data-theme="light"]{--bg-primary:var(--cream);--bg-secondary:#EDE0CF;--bg-card:var(--white);--text-primary:var(--dark-brown);--text-secondary:var(--warm-brown);--text-muted:rgba(89,64,47,0.5);--border-color:rgba(89,64,47,0.12)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6}
-a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;font-family:inherit}
-.container{max-width:1100px;margin:0 auto;padding:0 24px}
-.navbar{padding:16px 0;background:rgba(36,23,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-color);position:fixed;top:0;left:0;right:0;z-index:100}
-[data-theme="light"] .navbar{background:rgba(244,233,217,0.9)}
-.navbar .container{display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:800;color:var(--soft-gold);display:flex;align-items:center;gap:10px}
-.nav-logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--dark-brown);font-weight:900;font-size:1rem}
-.nav-links{display:flex;gap:8px}
-.nav-links a{padding:8px 14px;font-size:0.88rem;color:var(--text-muted);border-radius:8px;transition:var(--transition)}
-.nav-links a:hover,.nav-links a.active{color:var(--soft-gold)}
-.nav-login{padding:10px 22px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);font-weight:600;font-size:0.88rem;border-radius:8px}
-/* Header */
-.pricing-header{padding:140px 0 40px;text-align:center}
-.pricing-header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);margin-bottom:12px}
-.pricing-header p{color:var(--text-muted);max-width:500px;margin:0 auto 30px}
-/* Toggle */
-.billing-toggle{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:50px}
-.billing-toggle span{font-size:0.9rem;color:var(--text-muted);font-weight:500}
-.billing-toggle span.active{color:var(--text-primary);font-weight:700}
-.toggle-switch{width:50px;height:28px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:50px;position:relative;cursor:pointer;transition:var(--transition)}
-.toggle-switch.active{background:var(--soft-gold)}
-.toggle-dot{width:22px;height:22px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:var(--transition)}
-.toggle-switch.active .toggle-dot{left:24px}
-.save-badge{padding:3px 10px;background:rgba(102,187,106,0.15);color:#66BB6A;font-size:0.72rem;font-weight:700;border-radius:50px}
-/* Cards */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-bottom:100px}
-.price-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;padding:40px 32px;transition:var(--transition);position:relative}
-.price-card:hover{transform:translateY(-6px);box-shadow:0 8px 40px rgba(36,23,15,0.2)}
-.price-card.featured{border-color:var(--soft-gold);background:linear-gradient(135deg,rgba(201,154,97,0.08),rgba(201,154,97,0.02))}
-.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 16px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);font-size:0.68rem;font-weight:800;border-radius:50px;letter-spacing:1px}
-.plan-name{font-size:1rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
-.plan-price{font-family:'Playfair Display',serif;font-size:3rem;font-weight:800;margin-bottom:4px}
-.plan-price span{font-size:1rem;font-weight:400;color:var(--text-muted)}
-.plan-desc{font-size:0.85rem;color:var(--text-muted);margin-bottom:28px}
-.plan-features{list-style:none;margin-bottom:32px}
-.plan-features li{padding:8px 0;font-size:0.88rem;color:var(--text-secondary);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-color)}
-.plan-features li:last-child{border:none}
-.plan-features .check{color:#66BB6A}
-.plan-features .cross{color:rgba(255,255,255,0.15)}
-[data-theme="light"] .plan-features .cross{color:rgba(0,0,0,0.12)}
-.plan-btn{display:block;width:100%;padding:14px;text-align:center;border-radius:10px;font-size:0.92rem;font-weight:700;transition:var(--transition)}
-.plan-btn.outline{background:transparent;border:1px solid var(--border-color);color:var(--text-primary)}
-.plan-btn.outline:hover{border-color:var(--soft-gold);color:var(--soft-gold)}
-.plan-btn.gold{background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown)}
-.plan-btn.gold:hover{box-shadow:0 6px 20px rgba(201,154,97,0.3)}
-.footer{padding:30px 0;border-top:1px solid var(--border-color);text-align:center}
-.footer p{font-size:0.82rem;color:var(--text-muted)}
-@media(max-width:768px){.pricing-grid{grid-template-columns:1fr}.nav-links{display:none}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Pricing — PREDIA online tools.">
+  <title>Pricing | PREDIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<nav class="navbar"><div class="container">
-<a href="index.html" class="nav-logo"><div class="nav-logo-icon">P</div>PREDIA</a>
-<div class="nav-links"><a href="index.html">Home</a><a href="all-tools.html">Tools</a><a href="pricing.html" class="active">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a></div>
-<a href="login.html" class="nav-login">Log In</a>
-</div></nav>
+  <div class="announcement">A clearer way to work with documents. <a href="all-tools.html">Explore PREDIA →</a></div>
+  <header>
+    <a class="brand" href="index.html">PREDIA<span>.</span></a>
+    <button id="menuButton" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <a href="index.html">Home</a><a href="all-tools.html">All Tools</a>
+      <a href="pdf-editor.html">PDF Editor</a><a href="pricing.html">Pricing</a>
+      <a href="blog.html">Blog</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="actions">
+      <button id="themeToggle" aria-label="Toggle theme">◐</button>
+      <a href="login.html">Log in</a><a class="btn" href="register.html">Sign up</a>
+    </div>
+  </header>
 
-<section class="pricing-header"><div class="container">
-<h1>Simple, Transparent <span style="color:var(--soft-gold)">Pricing</span></h1>
-<p>Start free. Upgrade when you need more power. No hidden fees.</p>
-<div class="billing-toggle">
-<span class="active" id="monthlyLabel">Monthly</span>
-<div class="toggle-switch" id="billingToggle" onclick="toggleBilling()"><div class="toggle-dot"></div></div>
-<span id="yearlyLabel">Yearly</span>
-<span class="save-badge">Save 40%</span>
-</div>
-</div></section>
+  <main class="wrap">
+    <small>PLANS THAT FIT YOUR WORK</small>
+    <h1>Start free. <em>Do more with Pro.</em></h1>
+    <div class="grid">
+      <article class="tile">
+        <h2>Free</h2><h3>Free</h3>
+        <p>Basic tools and standard file limits.</p>
+        <a class="btn" href="register.html">Get started</a>
+      </article>
+      <article class="tile">
+        <h2>Pro Monthly</h2><h3>Coming soon</h3>
+        <p>Advanced PDF editing and expanded limits.</p>
+        <button data-notice="Pro subscriptions are not available yet.">Explore Pro</button>
+      </article>
+      <article class="tile">
+        <h2>Pro Yearly</h2><h3>Coming soon</h3>
+        <p>Professional features for long-term use.</p>
+      </article>
+    </div>
+    <p class="note">Payments are not enabled on this demo website.</p>
+  </main>
 
-<div class="container">
-<div class="pricing-grid">
-<!-- Free -->
-<div class="price-card">
-<div class="plan-name">Free</div>
-<div class="plan-price">$0<span>/month</span></div>
-<div class="plan-desc">Perfect for trying out PREDIA tools.</div>
-<ul class="plan-features">
-<li><span class="check">✓</span> 3 PDF edits per day</li>
-<li><span class="check">✓</span> 5 conversions per day</li>
-<li><span class="check">✓</span> 5 basic templates</li>
-<li><span class="check">✓</span> 10 MB file limit</li>
-<li><span class="cross">✕</span> Premium fonts</li>
-<li><span class="cross">✕</span> Priority processing</li>
-<li><span class="cross">✕</span> Advanced editing</li>
-</ul>
-<button class="plan-btn outline">Get Started Free</button>
-</div>
-<!-- Pro Monthly -->
-<div class="price-card featured">
-<div class="plan-name">Pro</div>
-<div class="plan-price" id="proPrice">$12<span>/month</span></div>
-<div class="plan-desc">For professionals who need full power.</div>
-<ul class="plan-features">
-<li><span class="check">✓</span> Unlimited PDF editing</li>
-<li><span class="check">✓</span> Unlimited conversions</li>
-<li><span class="check">✓</span> All premium templates</li>
-<li><span class="check">✓</span> 100 MB file limit</li>
-<li><span class="check">✓</span> Premium fonts</li>
-<li><span class="check">✓</span> Priority processing</li>
-<li><span class="check">✓</span> Advanced editing tools</li>
-</ul>
-<button class="plan-btn gold">Upgrade to Pro</button>
-</div>
-<!-- Team -->
-<div class="price-card">
-<div class="plan-name">Team</div>
-<div class="plan-price" id="teamPrice">$29<span>/month</span></div>
-<div class="plan-desc">For teams and businesses.</div>
-<ul class="plan-features">
-<li><span class="check">✓</span> Everything in Pro</li>
-<li><span class="check">✓</span> Up to 10 team members</li>
-<li><span class="check">✓</span> Shared workspace</li>
-<li><span class="check">✓</span> 500 MB file limit</li>
-<li><span class="check">✓</span> Admin dashboard</li>
-<li><span class="check">✓</span> Priority support</li>
-<li><span class="check">✓</span> API access</li>
-</ul>
-<button class="plan-btn outline">Contact Sales</button>
-</div>
-</div>
-</div>
-
-<footer class="footer"><p>© 2025 PREDIA. All rights reserved. Payment gateway integration coming soon.</p></footer>
-
-<script>
-let isYearly=false;
-function toggleBilling(){
-isYearly=!isYearly;
-document.getElementById('billingToggle').classList.toggle('active');
-document.getElementById('monthlyLabel').classList.toggle('active');
-document.getElementById('yearlyLabel').classList.toggle('active');
-if(isYearly){
-document.getElementById('proPrice').innerHTML='$7<span>/month</span>';
-document.getElementById('teamPrice').innerHTML='$17<span>/month</span>';
-}else{
-document.getElementById('proPrice').innerHTML='$12<span>/month</span>';
-document.getElementById('teamPrice').innerHTML='$29<span>/month</span>';
-}
-}
-</script>
+  <footer>
+    <div class="grid">
+      <div><b>PREDIA.</b><p>A thoughtful toolkit for the way you work.</p></div>
+      <div><b>Explore</b><a href="all-tools.html">All Tools</a><a href="pricing.html">Pricing</a></div>
+      <div><b>Company</b><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+      <div><b>Legal</b><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a></div>
+    </div>
+    <p>© 2026 PREDIA. All rights reserved.</p>
+  </footer>
+  <div id="toast" role="status"></div>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
