@@ -1,153 +1,55 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Tools — PREDIA</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--dark-brown:#24170F;--deep-brown:#352318;--warm-brown:#59402F;--warm-beige:#D9BFA1;--cream:#F4E9D9;--charcoal:#292725;--soft-gold:#C99A61;--white:#FFFFFF;--font-primary:'Inter',sans-serif;--font-display:'Playfair Display',serif;--radius-sm:8px;--radius-md:12px;--radius-lg:20px;--transition:all 0.3s cubic-bezier(0.4,0,0.2,1);--bg-primary:var(--dark-brown);--bg-secondary:var(--deep-brown);--bg-card:var(--charcoal);--text-primary:var(--cream);--text-secondary:var(--warm-beige);--text-muted:rgba(217,191,161,0.6);--border-color:rgba(201,154,97,0.15);--border-hover:rgba(201,154,97,0.4)}
-[data-theme="light"]{--bg-primary:var(--cream);--bg-secondary:#EDE0CF;--bg-card:var(--white);--text-primary:var(--dark-brown);--text-secondary:var(--warm-brown);--text-muted:rgba(89,64,47,0.5);--border-color:rgba(89,64,47,0.12);--border-hover:rgba(201,154,97,0.5)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-primary);background:var(--bg-primary);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
-a{text-decoration:none;color:inherit}ul{list-style:none}button{cursor:pointer;border:none;font-family:inherit}input{font-family:inherit;outline:none}
-.container{max-width:1280px;margin:0 auto;padding:0 24px}
-/* Navbar */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;background:rgba(36,23,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-color)}
-[data-theme="light"] .navbar{background:rgba(244,233,217,0.9)}
-.navbar .container{display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--soft-gold)}
-.nav-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--dark-brown);font-weight:900}
-.nav-links{display:flex;gap:6px;align-items:center}
-.nav-links a{padding:10px 16px;font-size:0.9rem;font-weight:500;color:var(--text-secondary);border-radius:var(--radius-sm);transition:var(--transition)}
-.nav-links a:hover,.nav-links a.active{color:var(--soft-gold);background:rgba(201,154,97,0.08)}
-.nav-login{padding:10px 24px;font-size:0.88rem;font-weight:600;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);border-radius:var(--radius-sm)}
-/* Page Header */
-.page-header{padding:140px 0 60px;text-align:center;background:var(--bg-secondary)}
-.page-header h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);margin-bottom:12px}
-.page-header p{color:var(--text-muted);font-size:1.05rem;max-width:600px;margin:0 auto 30px}
-/* Search & Filter */
-.tools-search-bar{display:flex;max-width:500px;margin:0 auto 20px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:6px;transition:var(--transition)}
-.tools-search-bar:focus-within{border-color:var(--soft-gold)}
-.tools-search-bar input{flex:1;background:transparent;border:none;color:var(--text-primary);padding:12px 16px;font-size:0.95rem}
-.tools-search-bar input::placeholder{color:var(--text-muted)}
-.tools-search-bar button{padding:12px 24px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);font-weight:600;border-radius:calc(var(--radius-lg) - 4px);font-size:0.9rem}
-.filter-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:40px}
-.filter-tab{padding:10px 22px;border-radius:50px;font-size:0.85rem;font-weight:600;background:var(--bg-card);color:var(--text-muted);border:1px solid var(--border-color);transition:var(--transition);cursor:pointer}
-.filter-tab:hover,.filter-tab.active{background:var(--soft-gold);color:var(--dark-brown);border-color:var(--soft-gold)}
-/* Tools Grid */
-.tools-section{padding:60px 0 100px}
-.category-title{font-family:var(--font-display);font-size:1.5rem;margin-bottom:24px;color:var(--text-primary);display:flex;align-items:center;gap:10px}
-.category-title span{font-size:1.2rem}
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;margin-bottom:60px}
-.tool-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:28px 20px;text-align:center;transition:var(--transition);cursor:pointer;position:relative}
-.tool-card:hover{transform:translateY(-6px);border-color:var(--border-hover);box-shadow:0 8px 40px rgba(36,23,15,0.16)}
-.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;border-radius:var(--radius-lg) var(--radius-lg) 0 0;transition:var(--transition)}
-.tool-card:hover::before{background:linear-gradient(90deg,var(--soft-gold),#E8C07A)}
-.tool-icon{width:52px;height:52px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.3rem}
-.tool-icon.pdf{background:rgba(198,40,40,0.12);color:#EF5350}
-.tool-icon.img{background:rgba(46,125,50,0.12);color:#66BB6A}
-.tool-icon.txt{background:rgba(156,39,176,0.12);color:#AB47BC}
-.tool-icon.doc{background:rgba(21,101,192,0.12);color:#42A5F5}
-.tool-icon.conv{background:rgba(255,143,0,0.12);color:#FFA726}
-.tool-name{font-size:0.92rem;font-weight:600;margin-bottom:4px}
-.tool-desc{font-size:0.78rem;color:var(--text-muted)}
-.pro-tag{position:absolute;top:12px;right:12px;padding:3px 10px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);font-size:0.65rem;font-weight:700;border-radius:50px;letter-spacing:1px}
-/* Footer */
-.footer{padding:40px 0;border-top:1px solid var(--border-color);text-align:center}
-.footer p{font-size:0.82rem;color:var(--text-muted)}
-.footer-links{display:flex;justify-content:center;gap:20px;margin-top:10px}
-.footer-links a{font-size:0.82rem;color:var(--text-muted);transition:var(--transition)}
-.footer-links a:hover{color:var(--soft-gold)}
-@media(max-width:768px){.nav-links{display:none}.tools-grid{grid-template-columns:repeat(2,1fr)}.filter-tabs{gap:6px}.filter-tab{padding:8px 14px;font-size:0.78rem}}
-@media(max-width:480px){.tools-grid{grid-template-columns:1fr}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="All Tools — PREDIA online tools.">
+  <title>All Tools | PREDIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<nav class="navbar"><div class="container">
-<a href="index.html" class="nav-logo"><div class="nav-logo-icon">P</div>PREDIA</a>
-<div class="nav-links">
-<a href="index.html">Home</a><a href="all-tools.html" class="active">All Tools</a><a href="pdf-editor.html">PDF Editor</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a>
-</div>
-<a href="login.html" class="nav-login">Log In</a>
-</div></nav>
+  <div class="announcement">A clearer way to work with documents. <a href="all-tools.html">Explore PREDIA →</a></div>
+  <header>
+    <a class="brand" href="index.html">PREDIA<span>.</span></a>
+    <button id="menuButton" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <a href="index.html">Home</a><a href="all-tools.html">All Tools</a>
+      <a href="pdf-editor.html">PDF Editor</a><a href="pricing.html">Pricing</a>
+      <a href="blog.html">Blog</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="actions">
+      <button id="themeToggle" aria-label="Toggle theme">◐</button>
+      <a href="login.html">Log in</a><a class="btn" href="register.html">Sign up</a>
+    </div>
+  </header>
 
-<section class="page-header">
-<div class="container">
-<h1>All <span style="color:var(--soft-gold)">Tools</span></h1>
-<p>Browse our complete collection of powerful online tools for PDF, Images, Text and Documents.</p>
-<div class="tools-search-bar">
-<input type="text" placeholder="Search tools..." id="toolSearch">
-<button>Search</button>
-</div>
-<div class="filter-tabs">
-<button class="filter-tab active" data-filter="all">All Tools</button>
-<button class="filter-tab" data-filter="pdf">PDF Tools</button>
-<button class="filter-tab" data-filter="image">Image Tools</button>
-<button class="filter-tab" data-filter="text">Text Tools</button>
-<button class="filter-tab" data-filter="doc">Document Tools</button>
-</div>
-</div>
-</section>
+  <main class="wrap">
+    <small>EXPLORE THE TOOLKIT</small>
+    <h1>All tools. <em>One workspace.</em></h1>
+    <input id="toolSearch" placeholder="Search tools...">
+    <div class="filters">
+      <button data-filter="all">All</button>
+      <button data-filter="pdf">PDF</button>
+      <button data-filter="image">Image</button>
+      <button data-filter="text">Text</button>
+      <button data-filter="document">Document</button>
+    </div>
+    <div class="grid" id="toolGrid"></div>
+    <p id="empty" hidden>No matching tools found.</p>
+  </main>
 
-<section class="tools-section"><div class="container">
-
-<h3 class="category-title"><span>📄</span> PDF Tools</h3>
-<div class="tools-grid" id="pdfTools">
-<div class="tool-card" data-cat="pdf"><span class="pro-tag">PRO</span><div class="tool-icon pdf">✏️</div><div class="tool-name">PDF Editor</div><div class="tool-desc">Edit PDFs professionally</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">📄</div><div class="tool-name">PDF to Word</div><div class="tool-desc">Convert PDF to DOCX</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon doc">📝</div><div class="tool-name">Word to PDF</div><div class="tool-desc">Convert DOCX to PDF</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">🗜️</div><div class="tool-name">Compress PDF</div><div class="tool-desc">Reduce file size</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">📎</div><div class="tool-name">Merge PDF</div><div class="tool-desc">Combine PDF files</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">✂️</div><div class="tool-name">Split PDF</div><div class="tool-desc">Split into pages</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">🔄</div><div class="tool-name">Rotate PDF</div><div class="tool-desc">Rotate pages</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">💧</div><div class="tool-name">Add Watermark</div><div class="tool-desc">Text or image watermark</div></div>
-<div class="tool-card" data-cat="pdf"><div class="tool-icon pdf">🗑️</div><div class="tool-name">Remove Pages</div><div class="tool-desc">Delete PDF pages</div></div>
-</div>
-
-<h3 class="category-title"><span>🖼️</span> Image Tools</h3>
-<div class="tools-grid" id="imageTools">
-<div class="tool-card" data-cat="image"><div class="tool-icon img">📷</div><div class="tool-name">Image Compressor</div><div class="tool-desc">Compress images</div></div>
-<div class="tool-card" data-cat="image"><div class="tool-icon img">📐</div><div class="tool-name">Image Resizer</div><div class="tool-desc">Resize dimensions</div></div>
-<div class="tool-card" data-cat="image"><div class="tool-icon conv">🔄</div><div class="tool-name">PNG to JPG</div><div class="tool-desc">Convert format</div></div>
-<div class="tool-card" data-cat="image"><div class="tool-icon conv">🖼️</div><div class="tool-name">JPG to PDF</div><div class="tool-desc">Images to PDF</div></div>
-</div>
-
-<h3 class="category-title"><span>📝</span> Text Tools</h3>
-<div class="tools-grid" id="textTools">
-<div class="tool-card" data-cat="text"><div class="tool-icon txt">🔤</div><div class="tool-name">Word Counter</div><div class="tool-desc">Count words & chars</div></div>
-<div class="tool-card" data-cat="text"><div class="tool-icon txt">🔊</div><div class="tool-name">Text to Speech</div><div class="tool-desc">Convert to audio</div></div>
-</div>
-
-</div></section>
-
-<footer class="footer"><div class="container">
-<p>© 2025 PREDIA. All rights reserved.</p>
-<div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div>
-</div></footer>
-
-<script>
-// Filter tabs
-document.querySelectorAll('.filter-tab').forEach(tab=>{
-tab.addEventListener('click',()=>{
-document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
-tab.classList.add('active');
-const f=tab.dataset.filter;
-document.querySelectorAll('.tool-card').forEach(c=>{
-if(f==='all'||c.dataset.cat===f){c.style.display=''}
-else{c.style.display='none'}
-});
-});
-});
-// Search
-document.getElementById('toolSearch').addEventListener('input',e=>{
-const q=e.target.value.toLowerCase();
-document.querySelectorAll('.tool-card').forEach(c=>{
-const n=c.querySelector('.tool-name').textContent.toLowerCase();
-c.style.display=n.includes(q)?'':'none';
-});
-});
-</script>
+  <footer>
+    <div class="grid">
+      <div><b>PREDIA.</b><p>A thoughtful toolkit for the way you work.</p></div>
+      <div><b>Explore</b><a href="all-tools.html">All Tools</a><a href="pricing.html">Pricing</a></div>
+      <div><b>Company</b><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+      <div><b>Legal</b><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a></div>
+    </div>
+    <p>© 2026 PREDIA. All rights reserved.</p>
+  </footer>
+  <div id="toast" role="status"></div>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
