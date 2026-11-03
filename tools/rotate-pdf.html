@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Rotate PDF | PREDIA</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="announcement">A clearer way to work with documents. <a href="../all-tools.html">Explore PREDIA →</a></div>
+  <header>
+    <a class="brand" href="../index.html">PREDIA<span>.</span></a>
+    <button id="menuButton" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <a href="../index.html">Home</a><a href="../all-tools.html">All Tools</a>
+      <a href="../pdf-editor.html">PDF Editor</a><a href="../pricing.html">Pricing</a>
+      <a href="../blog.html">Blog</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
+    </nav>
+    <div class="actions">
+      <button id="themeToggle" aria-label="Toggle theme">◐</button>
+      <a href="../login.html">Log in</a><a class="btn" href="../register.html">Sign up</a>
+    </div>
+  </header>
+  <main class="wrap">
+    <small>PREDIA TOOL</small>
+    <h1>Rotate PDF.</h1>
+    <p>Rotate PDF pages to the correct orientation.</p>
+    <div class="formbox">
+      <form id="toolForm" data-tool="rotate-pdf">
+        <label class="upload">Choose PDF<input id="fileInput" type="file" accept=".pdf,application/pdf"></label>
+        <p id="fileName">No file selected</p>
+        <button class="btn" type="submit">Process</button>
+        <p id="toolMessage" class="note" role="status">Select a file to begin.</p>
+        <a id="download" class="btn gold" hidden>Download result</a>
+      </form>
+    </div>
+    <h2>How it works</h2>
+    <div class="grid">
+      <article class="tile">01 · Select a PDF</article>
+      <article class="tile">02 · Process the pages</article>
+      <article class="tile">03 · Download the result</article>
+    </div>
+    <p class="note">PDF rotation requires an additional PDF engine and is not active in this starter.</p>
+  </main>
+  <footer>
+    <div class="grid">
+      <div><b>PREDIA.</b><p>A thoughtful toolkit for the way you work.</p></div>
+      <div><b>Explore</b><a href="../all-tools.html">All Tools</a><a href="../pricing.html">Pricing</a></div>
+      <div><b>Company</b><a href="../about.html">About</a><a href="../contact.html">Contact</a></div>
+      <div><b>Legal</b><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><a href="../cookies.html">Cookies</a></div>
+    </div>
+    <p>© 2026 PREDIA. All rights reserved.</p>
+  </footer>
+  <div id="toast" role="status"></div>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/tools.js" defer></script>
+</body>
+</html>
