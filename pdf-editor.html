@@ -1,268 +1,49 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Editor — PREDIA</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--dark-brown:#24170F;--deep-brown:#352318;--warm-brown:#59402F;--warm-beige:#D9BFA1;--cream:#F4E9D9;--charcoal:#292725;--soft-gold:#C99A61;--white:#FFFFFF;--bg-primary:var(--dark-brown);--bg-secondary:var(--deep-brown);--bg-card:var(--charcoal);--text-primary:var(--cream);--text-secondary:var(--warm-beige);--text-muted:rgba(217,191,161,0.6);--border-color:rgba(201,154,97,0.15);--transition:all 0.3s ease}
-[data-theme="light"]{--bg-primary:var(--cream);--bg-secondary:#EDE0CF;--bg-card:var(--white);--text-primary:var(--dark-brown);--text-secondary:var(--warm-brown);--text-muted:rgba(89,64,47,0.5);--border-color:rgba(89,64,47,0.12)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--bg-primary);color:var(--text-primary);height:100vh;display:flex;flex-direction:column;overflow:hidden}
-button{cursor:pointer;border:none;font-family:inherit;background:none;color:inherit}
-/* Top Bar */
-.top-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--bg-secondary);border-bottom:1px solid var(--border-color);height:52px;flex-shrink:0}
-.top-left{display:flex;align-items:center;gap:16px}
-.logo{font-size:1.1rem;font-weight:800;color:var(--soft-gold);letter-spacing:1px}
-.doc-name{font-size:0.85rem;color:var(--text-muted);padding:4px 10px;border:1px solid transparent;border-radius:6px;transition:var(--transition)}
-.doc-name:hover{border-color:var(--border-color)}
-.top-center{display:flex;gap:4px}
-.top-btn{padding:8px 12px;font-size:0.78rem;color:var(--text-muted);border-radius:6px;transition:var(--transition);display:flex;align-items:center;gap:5px}
-.top-btn:hover{background:rgba(201,154,97,0.1);color:var(--soft-gold)}
-.top-right{display:flex;gap:8px;align-items:center}
-.btn-save{padding:8px 18px;font-size:0.82rem;font-weight:600;background:rgba(201,154,97,0.1);color:var(--soft-gold);border:1px solid rgba(201,154,97,0.2);border-radius:6px;transition:var(--transition)}
-.btn-save:hover{background:rgba(201,154,97,0.2)}
-.btn-download{padding:8px 18px;font-size:0.82rem;font-weight:600;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);border-radius:6px;transition:var(--transition)}
-.btn-download:hover{box-shadow:0 4px 15px rgba(201,154,97,0.3)}
-.btn-pro{padding:8px 16px;font-size:0.78rem;font-weight:700;background:linear-gradient(135deg,#E8C07A,var(--soft-gold));color:var(--dark-brown);border-radius:6px;letter-spacing:0.5px}
-/* Main Layout */
-.editor-main{display:flex;flex:1;overflow:hidden}
-/* Left Sidebar */
-.left-sidebar{width:60px;background:var(--bg-secondary);border-right:1px solid var(--border-color);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;flex-shrink:0}
-.side-tool{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--text-muted);transition:var(--transition);position:relative}
-.side-tool:hover{background:rgba(201,154,97,0.1);color:var(--soft-gold)}
-.side-tool.active{background:rgba(201,154,97,0.15);color:var(--soft-gold)}
-.side-tool .tooltip{position:absolute;left:54px;background:var(--bg-card);color:var(--text-primary);padding:4px 10px;border-radius:6px;font-size:0.72rem;white-space:nowrap;opacity:0;pointer-events:none;transition:var(--transition);border:1px solid var(--border-color);z-index:10}
-.side-tool:hover .tooltip{opacity:1}
-.side-divider{width:28px;height:1px;background:var(--border-color);margin:6px 0}
-/* Canvas Area */
-.canvas-area{flex:1;background:var(--bg-primary);display:flex;flex-direction:column;overflow:hidden}
-.canvas-toolbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:var(--bg-secondary);border-bottom:1px solid var(--border-color);flex-shrink:0}
-.canvas-toolbar-left{display:flex;gap:6px;align-items:center}
-.zoom-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--text-muted);transition:var(--transition)}
-.zoom-btn:hover{background:rgba(201,154,97,0.1);color:var(--soft-gold)}
-.zoom-level{font-size:0.8rem;color:var(--text-muted);min-width:45px;text-align:center}
-.page-nav{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-muted)}
-.page-nav button{padding:4px 10px;border-radius:4px;font-size:0.78rem;color:var(--text-muted);transition:var(--transition)}
-.page-nav button:hover{background:rgba(201,154,97,0.1);color:var(--soft-gold)}
-.canvas-scroll{flex:1;overflow:auto;display:flex;justify-content:center;padding:30px;background:repeating-conic-gradient(rgba(201,154,97,0.03) 0% 25%,transparent 0% 50%) 0 0/20px 20px}
-.pdf-page{width:612px;min-height:792px;background:white;border-radius:4px;box-shadow:0 4px 20px rgba(0,0,0,0.3);padding:60px 50px;position:relative;cursor:text}
-.pdf-page h2{color:#24170F;font-size:1.5rem;margin-bottom:16px;font-family:serif}
-.pdf-page p{color:#555;font-size:0.9rem;line-height:1.8;margin-bottom:12px}
-.pdf-page .placeholder-block{height:120px;background:#F5F0EB;border-radius:6px;margin:20px 0;display:flex;align-items:center;justify-content:center;color:#999;font-size:0.85rem}
-.pdf-page[contenteditable="true"]:focus{outline:2px solid var(--soft-gold);outline-offset:2px}
-/* Right Sidebar */
-.right-sidebar{width:260px;background:var(--bg-secondary);border-left:1px solid var(--border-color);padding:16px;overflow-y:auto;flex-shrink:0}
-.panel-title{font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px}
-.prop-group{margin-bottom:20px}
-.prop-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.prop-label{font-size:0.8rem;color:var(--text-muted)}
-.prop-input{width:100px;padding:6px 10px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.8rem;transition:var(--transition)}
-.prop-input:focus{border-color:var(--soft-gold)}
-.prop-select{width:100%;padding:8px 10px;background:var(--bg-card);border:1px solid var(--border-color);border-radius:6px;color:var(--text-primary);font-size:0.8rem;margin-bottom:8px;appearance:none}
-.format-btns{display:flex;gap:4px;margin-bottom:10px}
-.fmt-btn{width:34px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;color:var(--text-muted);border:1px solid var(--border-color);transition:var(--transition)}
-.fmt-btn:hover,.fmt-btn.active{background:rgba(201,154,97,0.15);color:var(--soft-gold);border-color:rgba(201,154,97,0.3)}
-.color-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.color-dot{width:24px;height:24px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:var(--transition)}
-.color-dot:hover,.color-dot.active{border-color:var(--soft-gold);transform:scale(1.15)}
-.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.slider-row input[type="range"]{flex:1;accent-color:var(--soft-gold)}
-.slider-val{font-size:0.75rem;color:var(--text-muted);min-width:30px}
-/* Upload Overlay */
-.upload-overlay{position:fixed;inset:0;background:rgba(36,23,15,0.8);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:100}
-.upload-overlay.hidden{display:none}
-.upload-box{background:var(--bg-card);border:2px dashed rgba(201,154,97,0.3);border-radius:20px;padding:60px;text-align:center;max-width:500px;width:90%;transition:var(--transition)}
-.upload-box:hover{border-color:var(--soft-gold)}
-.upload-icon{font-size:3rem;margin-bottom:16px}
-.upload-title{font-size:1.2rem;font-weight:700;margin-bottom:8px}
-.upload-desc{font-size:0.88rem;color:var(--text-muted);margin-bottom:24px}
-.upload-btn{padding:14px 32px;background:linear-gradient(135deg,var(--soft-gold),#B8883F);color:var(--dark-brown);font-weight:700;border-radius:10px;font-size:0.95rem;transition:var(--transition)}
-.upload-btn:hover{box-shadow:0 6px 20px rgba(201,154,97,0.3)}
-.upload-or{font-size:0.8rem;color:var(--text-muted);margin:16px 0}
-.upload-link{color:var(--soft-gold);font-size:0.85rem;text-decoration:underline;cursor:pointer}
-@media(max-width:900px){.right-sidebar{display:none}.left-sidebar{width:50px}.pdf-page{width:100%;min-height:auto;padding:30px 20px}}
-@media(max-width:600px){.top-center{display:none}.doc-name{display:none}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PDF Editor — PREDIA online tools.">
+  <title>PDF Editor | PREDIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="announcement">A clearer way to work with documents. <a href="all-tools.html">Explore PREDIA →</a></div>
+  <header>
+    <a class="brand" href="index.html">PREDIA<span>.</span></a>
+    <button id="menuButton" aria-expanded="false">☰</button>
+    <nav id="mainNav">
+      <a href="index.html">Home</a><a href="all-tools.html">All Tools</a>
+      <a href="pdf-editor.html">PDF Editor</a><a href="pricing.html">Pricing</a>
+      <a href="blog.html">Blog</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="actions">
+      <button id="themeToggle" aria-label="Toggle theme">◐</button>
+      <a href="login.html">Log in</a><a class="btn" href="register.html">Sign up</a>
+    </div>
+  </header>
 
-<!-- Upload Overlay -->
-<div class="upload-overlay" id="uploadOverlay">
-<div class="upload-box" id="uploadBox">
-<div class="upload-icon">📄</div>
-<div class="upload-title">Upload Your PDF</div>
-<div class="upload-desc">Drag & drop your PDF file here or click to browse</div>
-<button class="upload-btn" onclick="document.getElementById('fileInput').click()">Select PDF File</button>
-<input type="file" id="fileInput" accept=".pdf" style="display:none">
-<div class="upload-or">or</div>
-<span class="upload-link" onclick="startBlank()">Start with a blank document</span>
-</div>
-</div>
+  <main class="wrap">
+    <small>PREDIA PRO WORKSPACE</small>
+    <h1>Professional PDF <em>Editor.</em></h1>
+    <p>Open a PDF to preview it in your browser. Advanced editing controls require the PDF editing engine.</p>
+    <label class="upload">Choose PDF<input id="pdfFile" type="file" accept="application/pdf"></label>
+    <p id="pdfName">No document selected</p>
+    <iframe id="pdfFrame" title="PDF preview" hidden></iframe>
+  </main>
 
-<!-- Top Bar -->
-<div class="top-bar">
-<div class="top-left">
-<span class="logo">PREDIA</span>
-<input class="doc-name" value="Untitled Document" id="docName">
-</div>
-<div class="top-center">
-<button class="top-btn" onclick="document.execCommand('undo')">↩ Undo</button>
-<button class="top-btn" onclick="document.execCommand('redo')">↪ Redo</button>
-<button class="top-btn">👁 Preview</button>
-</div>
-<div class="top-right">
-<button class="btn-save">💾 Save</button>
-<button class="btn-download" onclick="downloadPDF()">⬇ Download</button>
-<button class="btn-pro">✦ PRO</button>
-</div>
-</div>
-
-<!-- Main Editor -->
-<div class="editor-main">
-<!-- Left Sidebar -->
-<div class="left-sidebar">
-<button class="side-tool active" onclick="setTool(this,'select')">🖱<span class="tooltip">Select</span></button>
-<button class="side-tool" onclick="setTool(this,'text')">T<span class="tooltip">Edit Text</span></button>
-<button class="side-tool" onclick="addText()">A+<span class="tooltip">Add Text</span></button>
-<div class="side-divider"></div>
-<button class="side-tool" onclick="addImage()">🖼<span class="tooltip">Add Image</span></button>
-<button class="side-tool" onclick="addShape()">⬜<span class="tooltip">Add Shape</span></button>
-<button class="side-tool">✍<span class="tooltip">Signature</span></button>
-<div class="side-divider"></div>
-<button class="side-tool">💧<span class="tooltip">Watermark</span></button>
-<button class="side-tool">🎨<span class="tooltip">Background</span></button>
-<button class="side-tool">📐<span class="tooltip">Page Size</span></button>
-<div class="side-divider"></div>
-<button class="side-tool">📋<span class="tooltip">Templates</span></button>
-</div>
-
-<!-- Canvas -->
-<div class="canvas-area">
-<div class="canvas-toolbar">
-<div class="canvas-toolbar-left">
-<button class="zoom-btn" onclick="zoom(-10)">−</button>
-<span class="zoom-level" id="zoomLevel">100%</span>
-<button class="zoom-btn" onclick="zoom(10)">+</button>
-<button class="zoom-btn" onclick="zoomFit()">⊡</button>
-</div>
-<div class="page-nav">
-<button>◀</button>
-<span>Page <strong>1</strong> of <strong>1</strong></span>
-<button>▶</button>
-<button style="margin-left:8px;color:var(--soft-gold)">+ Add Page</button>
-</div>
-</div>
-<div class="canvas-scroll">
-<div class="pdf-page" id="pdfPage" contenteditable="true">
-<h2>Your Document Title</h2>
-<p>Start editing your PDF document here. Click anywhere on this page to begin typing. You can format text, add images, insert shapes, and customize your document using the tools on the left sidebar and the properties panel on the right.</p>
-<p>PREDIA's PDF Editor gives you professional-grade editing capabilities right in your browser. No software installation required.</p>
-<div class="placeholder-block">📊 Chart / Image Placeholder</div>
-<p>Continue editing your document content here. All changes are saved automatically and can be exported as a new PDF file when you're ready.</p>
-</div>
-</div>
-</div>
-
-<!-- Right Sidebar -->
-<div class="right-sidebar">
-<div class="panel-title">Text Properties</div>
-<div class="prop-group">
-<select class="prop-select" onchange="document.execCommand('fontName',false,this.value)">
-<option value="Inter">Inter</option>
-<option value="Arial">Arial</option>
-<option value="Georgia">Georgia</option>
-<option value="Times New Roman">Times New Roman</option>
-<option value="Courier New">Courier New</option>
-<option value="Verdana">Verdana</option>
-</select>
-<div class="prop-row">
-<span class="prop-label">Size</span>
-<input class="prop-input" type="number" value="14" min="8" max="120" onchange="document.execCommand('fontSize',false,this.value)">
-</div>
-</div>
-<div class="prop-group">
-<div class="format-btns">
-<button class="fmt-btn" onclick="document.execCommand('bold')"><b>B</b></button>
-<button class="fmt-btn" onclick="document.execCommand('italic')"><i>I</i></button>
-<button class="fmt-btn" onclick="document.execCommand('underline')"><u>U</u></button>
-<button class="fmt-btn" onclick="document.execCommand('strikeThrough')"><s>S</s></button>
-</div>
-<div class="format-btns">
-<button class="fmt-btn" onclick="document.execCommand('justifyLeft')">≡</button>
-<button class="fmt-btn" onclick="document.execCommand('justifyCenter')">≡</button>
-<button class="fmt-btn" onclick="document.execCommand('justifyRight')">≡</button>
-</div>
-</div>
-<div class="prop-group">
-<div class="panel-title" style="margin-top:8px">Text Color</div>
-<div class="color-row">
-<div class="color-dot active" style="background:#333" onclick="setColor('#333333')"></div>
-<div class="color-dot" style="background:#C62828" onclick="setColor('#C62828')"></div>
-<div class="color-dot" style="background:#1565C0" onclick="setColor('#1565C0')"></div>
-<div class="color-dot" style="background:#2E7D32" onclick="setColor('#2E7D32')"></div>
-<div class="color-dot" style="background:#C99A61" onclick="setColor('#C99A61')"></div>
-<div class="color-dot" style="background:#6A1B9A" onclick="setColor('#6A1B9A')"></div>
-<div class="color-dot" style="background:#000" onclick="setColor('#000000')"></div>
-<div class="color-dot" style="background:#fff;border:1px solid #ccc" onclick="setColor('#FFFFFF')"></div>
-</div>
-</div>
-<div class="prop-group">
-<div class="panel-title">Spacing</div>
-<div class="slider-row">
-<span class="prop-label">Line</span>
-<input type="range" min="1" max="3" step="0.1" value="1.8">
-<span class="slider-val">1.8</span>
-</div>
-<div class="slider-row">
-<span class="prop-label">Letter</span>
-<input type="range" min="0" max="5" step="0.5" value="0">
-<span class="slider-val">0</span>
-</div>
-</div>
-<div class="prop-group">
-<div class="panel-title">Opacity</div>
-<div class="slider-row">
-<input type="range" min="0" max="100" value="100" style="flex:1;accent-color:var(--soft-gold)">
-<span class="slider-val">100%</span>
-</div>
-</div>
-<div class="prop-group">
-<div class="panel-title">Page</div>
-<div class="prop-row">
-<span class="prop-label">Size</span>
-<select class="prop-input" style="width:110px">
-<option>A4</option><option>Letter</option><option>Legal</option><option>A3</option>
-</select>
-</div>
-<div class="prop-row">
-<span class="prop-label">Orientation</span>
-<select class="prop-input" style="width:110px">
-<option>Portrait</option><option>Landscape</option>
-</select>
-</div>
-</div>
-</div>
-</div>
-
-<script>
-let currentZoom=100;
-function zoom(d){currentZoom=Math.max(25,Math.min(200,currentZoom+d));document.getElementById('pdfPage').style.transform=`scale(${currentZoom/100})`;document.getElementById('pdfPage').style.transformOrigin='top center';document.getElementById('zoomLevel').textContent=currentZoom+'%'}
-function zoomFit(){currentZoom=100;document.getElementById('pdfPage').style.transform='scale(1)';document.getElementById('zoomLevel').textContent='100%'}
-function setTool(el,t){document.querySelectorAll('.side-tool').forEach(b=>b.classList.remove('active'));el.classList.add('active')}
-function setColor(c){document.execCommand('foreColor',false,c);document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));event.target.classList.add('active')}
-function addText(){const p=document.createElement('p');p.textContent='New text block';p.style.color='#333';p.style.fontSize='14px';p.contentEditable='true';document.getElementById('pdfPage').appendChild(p)}
-function addImage(){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.onchange=e=>{const r=new FileReader();r.onload=ev=>{const img=document.createElement('img');img.src=ev.target.result;img.style.maxWidth='100%';img.style.margin='10px 0';img.style.borderRadius='4px';document.getElementById('pdfPage').appendChild(img)};r.readAsDataURL(e.target.files[0])};inp.click()}
-function addShape(){const d=document.createElement('div');d.style.cssText='width:150px;height:100px;background:rgba(201,154,97,0.15);border:2px solid #C99A61;border-radius:8px;margin:10px 0';document.getElementById('pdfPage').appendChild(d)}
-function startBlank(){document.getElementById('uploadOverlay').classList.add('hidden');document.getElementById('pdfPage').innerHTML='<h2>New Document</h2><p>Start typing here...</p>'}
-function downloadPDF(){alert('PDF Download: In production, this uses pdf-lib to generate and download the edited PDF file.')}
-document.getElementById('fileInput').addEventListener('change',function(){if(this.files[0]){document.getElementById('uploadOverlay').classList.add('hidden');document.getElementById('docName').value=this.files[0].name}});
-// Drag and drop
-const ub=document.getElementById('uploadBox');
-ub.addEventListener('dragover',e=>{e.preventDefault();ub.style.borderColor='var(--soft-gold)'});
-ub.addEventListener('dragleave',()=>{ub.style.borderColor=''});
-ub.addEventListener('drop',e=>{e.preventDefault();ub.style.borderColor='';if(e.dataTransfer.files[0]){document.getElementById('uploadOverlay').classList.add('hidden');document.getElementById('docName').value=e.dataTransfer.files[0].name}});
-</script>
+  <footer>
+    <div class="grid">
+      <div><b>PREDIA.</b><p>A thoughtful toolkit for the way you work.</p></div>
+      <div><b>Explore</b><a href="all-tools.html">All Tools</a><a href="pricing.html">Pricing</a></div>
+      <div><b>Company</b><a href="about.html">About</a><a href="contact.html">Contact</a></div>
+      <div><b>Legal</b><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="cookies.html">Cookies</a></div>
+    </div>
+    <p>© 2026 PREDIA. All rights reserved.</p>
+  </footer>
+  <div id="toast" role="status"></div>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
